@@ -37,38 +37,51 @@ Follow these steps sequentially:
 
 1. Use `calibration/camera_align/sfm.ipynb` to compute the camera poses in world coordinates (virtual coordinates) and rescale them using the Aruco board.
 2. Use `calibration/cam_to_base/tsdf_initialization.ipynb` to check alignment and generate a 3D point cloud using TSDF (this can serve as initialization for [GraspSplats](https://github.com/jimazeyu/GraspSplats)).
-3. Use `calibration/cam_to_base/calibration.ipynb` to calibrate both the wrist and side cameras. The output will include transformation matrices, such as `world2base` (original coordinate system) and side cameras to base.
+3. Use `calibration/cam_to_base/calibration.ipynb` to calibrate both the wrist and side cameras. The output will include transformation matrices as calibration results.
 
-Example results:
+**Example results:**
 
+Wrist camera to end effector:
+```python
+Rotation matrix: 
+[[-0.01106385 -0.99964285  0.02432601]
+ [ 0.99967782 -0.01161345 -0.02256943]
+ [ 0.02284388  0.02406847  0.99944928]]
+Translation vector: 
+[[ 0.07624674]
+ [-0.03747215]
+ [-0.09101364]]
+```
+
+Virtual colmap coordinates to the arm base(can be directly copied to GraspSplats):
 ```python
 world2base = np.array([
-    [-0.45036495018819156, -0.8136286436826232, 0.36766811368564656, 0.4199064849740805],
-    [-0.8862783766217048, 0.3575391129093141, -0.2944085968052156, 0.20789427908058333],
-    [0.10808353609492491, -0.45844761196803585, -0.8821245582716889, 0.5606234792839725],
-    [0.0, 0.0, 0.0, 1.0],
+[-0.4089165231525215, -0.8358961766325012, 0.3661486842582114, 0.42083348316217706],
+[-0.9105881302403995, 0.34730407737749247, -0.22407394962882685, 0.20879287837427596],
+[0.060137626808399375, -0.4250381861999404, -0.9031755123527864, 0.5594013590398528],
+[0.0, 0.0, 0.0, 1.0],
 ])
 ```
 
 Left camera to base:
 
 ```python
-np.array([
-    [-0.99767353,  0.01652426, -0.06613986,  0.48034451],
-    [0.05913856,  0.6924143,  -0.71907237,  0.64605187],
-    [0.03391405, -0.72131089, -0.69178063,  0.56220322],
-    [0., 0., 0., 1.]
+left2base = np.array([
+[-0.9976893814818404, 0.016141059503606225, -0.06599518373702401, 0.4802522351597585],
+[0.05878010270198073, 0.6921878285221563, -0.7193197547489758, 0.6467787114729435],
+[0.03407047996032865, -0.7215368848810733, -0.6915372196428687, 0.5627649333032588],
+[0.0, 0.0, 0.0, 1.0],
 ])
 ```
 
 Right camera to base:
 
 ```python
-np.array([
-    [0.99990103,  0.00362503,  0.01359375,  0.49349123],
-    [-0.0094344, -0.54400889,  0.83902641, -0.66249925],
-    [0.01043662, -0.83907162, -0.54392085,  0.46702689],
-    [0., 0., 0., 1.]
+right2base = np.array([
+[0.9998830560352922, 0.004162496284347904, 0.01471556584733334, 0.4926358949473875],
+[-0.010079531484636053, -0.5442897813649162, 0.8388367164989752, -0.6617851283408656],
+[0.011501186833307645, -0.8388869456168774, -0.544184173947581, 0.46742609681882763],
+[0.0, 0.0, 0.0, 1.0],
 ])
 ```
 
